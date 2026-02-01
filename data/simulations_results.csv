@@ -1,0 +1,10 @@
+attack,average_risk_score,confidence
+Brute Force,0.45,0.95
+Dictionary Attack,0.72,0.90
+Mutation Attack,0.58,0.85
+Credential Stuffing,0.61,0.75
+Password Spraying,0.81,0.90
+Markov Pattern,0.54,0.80
+Offline Hash,0.32,0.95
+Social Engineering,0.66,0.70
+MFA Fatigue,0.47,0.90

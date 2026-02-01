@@ -1,0 +1,11 @@
+{
+  "Brute Force": 0.25,
+  "Dictionary Attack": 0.40,
+  "Mutation Attack": 0.30,
+  "Credential Stuffing": 0.45,
+  "Password Spraying": 0.55,
+  "Markov Pattern": 0.35,
+  "Offline Hash": 0.20,
+  "Social Engineering": 0.50,
+  "MFA Fatigue": 0.38
+}
