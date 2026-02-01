@@ -19,18 +19,11 @@ def run_all_attack_simulations(
 ) -> dict:
     """
     Central orchestration engine for PASSGUARD LABS
-
-    Returns a structured attack intelligence report:
-    - individual attack outputs
-    - ranked attack priority
-    - overall risk score
     """
 
     attack_results = []
 
-    # -------------------------------
     # Brute Force
-    # -------------------------------
     attack_results.append(
         estimate_bruteforce(
             password_length=features["length"],
@@ -38,83 +31,47 @@ def run_all_attack_simulations(
         )
     )
 
-    # -------------------------------
-    # Dictionary Attack
-    # -------------------------------
-    attack_results.append(
-        dictionary_attack(password)
-    )
+    # Dictionary
+    attack_results.append(dictionary_attack(password))
 
-    # -------------------------------
-    # Mutation Attack
-    # -------------------------------
-    attack_results.append(
-        mutation_attack(password)
-    )
+    # Mutation
+    attack_results.append(mutation_attack(password))
 
-    # -------------------------------
     # Credential Stuffing
-    # -------------------------------
-    attack_results.append(
-        credential_stuffing_attack(password)
-    )
+    attack_results.append(credential_stuffing_attack(password))
 
-    # -------------------------------
     # Password Spraying
-    # -------------------------------
-    attack_results.append(
-        password_spraying_attack(password)
-    )
+    attack_results.append(password_spraying_attack(password))
 
-    # -------------------------------
-    # Markov Pattern Attack
-    # -------------------------------
-    attack_results.append(
-        markov_pattern_attack(password)
-    )
+    # Markov Pattern
+    attack_results.append(markov_pattern_attack(password))
 
-    # -------------------------------
-    # Offline Hash Attack
-    # -------------------------------
-    attack_results.append(
-        offline_hash_attack(hash_algorithm)
-    )
+    # Offline Hash
+    attack_results.append(offline_hash_attack(hash_algorithm))
 
-    # -------------------------------
     # Social Engineering
-    # -------------------------------
-    attack_results.append(
-        social_engineering_attack(password, username)
-    )
+    attack_results.append(social_engineering_attack(password, username))
 
-    # -------------------------------
     # MFA Fatigue
-    # -------------------------------
-    attack_results.append(
-        mfa_fatigue_attack(mfa_enabled, mfa_pushes_per_day)
-    )
+    attack_results.append(mfa_fatigue_attack(mfa_enabled, mfa_pushes_per_day))
 
-    # -------------------------------
-    # Normalize & Rank Attacks
-    # -------------------------------
+    # Rank attacks
     ranked_attacks = sorted(
         attack_results,
         key=lambda x: x["risk_score"],
         reverse=True
     )
 
-    # -------------------------------
-    # Overall Risk Calculation
-    # -------------------------------
+    # Overall risk
     overall_risk = round(
         sum(a["risk_score"] for a in attack_results) / len(attack_results),
         3
     )
 
-    # -------------------------------
-    # Final Platform Output
-    # -------------------------------
     return {
         "overall_risk_score": overall_risk,
         "attack_count": len(attack_results),
-        "highest_risk_attack": ranked
+        "highest_risk_attack": ranked_attacks[0]["attack"],
+        "ranked_attacks": ranked_attacks,
+        "raw_attack_data": attack_results
+    }
